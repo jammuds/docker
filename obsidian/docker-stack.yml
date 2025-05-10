@@ -1,0 +1,19 @@
+---
+services:
+  obsidian:
+    image: lscr.io/linuxserver/obsidian:latest
+    container_name: obsidian
+    security_opt:
+      - seccomp:unconfined #optional
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+    command: /bin/bash -c 'mkdir -p /squashfs-root ; ln -sf /usr/bin/obsidian /squashfs-root/obsidian ;tail -f /dev/null'
+    volumes:
+      -  $OBSIDIAN_DIRECTORY/config:/config
+    ports:
+      - $OBSIDIAN_HOST_PORT1:3000
+      - $OBSIDIAN_HOST_PORT2:3001
+    shm_size: "1gb"
+    restart: unless-stopped
