@@ -1,0 +1,18 @@
+---
+services:
+  couchdb-obsidian-livesync:
+    image: couchdb:latest
+    container_name: obsidian-livesync #shortened name
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=0022
+      - TZ=America/Los_Angeles
+      - COUCHDB_USER=$COUCHDB_USER #change
+      - COUCHDB_PASSWORD=$COUCHDB_PASSWORD #change
+    volumes:
+      - $COUCHDB_OBSIDIAN_LIVESYNC_DIRECTORY/data:/opt/couchdb/data
+      - $COUCHDB_OBSIDIAN_LIVESYNC_DIRECTORY/etc/local.d:/opt/couchdb/etc/local.d
+    ports:
+      - $COUCHDB_HOST_PORT:5984
+    restart: unless-stopped
