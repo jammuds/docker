@@ -1,0 +1,15 @@
+---
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:latest
+    container_name: filebrowser
+    restart: unless-stopped
+    volumes:
+      - $MOUNT_DIRECTORY:/srv/$MOUNT_DIRECTORY #can add multiple directories
+      - $FILEBROWSER_DIRECTORY/database/filebrowser.db:/database/filebrowser.db
+      - $FILEBROWSER_DIRECTORY/config/settings.json:/config/settings.json 
+    environment:
+      PUID: $(id -u)
+      PGID: $(id -g)
+    ports:
+      - 5040:80
