@@ -1,0 +1,17 @@
+---
+services:
+  duplicati:
+    image: lscr.io/linuxserver/duplicati:latest
+    container_name: duplicati
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=America/Los_Angeles
+      - CLI_ARGS= #optional
+    volumes:
+      - $DUPLICATI_DIRECTORY/config:/config
+      - $DUPLICATI_DIRECTORY/backups:/backups
+      - $MOUNT_DIRECTORY:/source
+    ports:
+      - $DUPLICATI_HOST_PORT:8200
+    restart: unless-stopped
